@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: yoprj
+  profiles:
+    active: ${APP_PROFILE:local}
+app:
+  jwt:
+    issuer: yoedu-demo
+    secret: yoedu-demo-secret-key-12345678901234567890
+    access-token-ttl-minutes: 480

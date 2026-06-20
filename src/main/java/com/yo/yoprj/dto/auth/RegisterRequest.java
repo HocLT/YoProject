@@ -1,0 +1,14 @@
+package com.yo.yoprj.dto.auth;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record RegisterRequest(
+        @NotBlank @Size(min = 4, max = 50) String username,
+        @NotBlank @Size(min = 6, max = 50) String password,
+        @NotBlank @Size(max = 100) String fullName,
+        @Email @Size(max = 100) String email,
+        @Size(max = 20) String phone
+) {
+}
