@@ -1,60 +1,42 @@
 package com.yo.yoprj.service.impl;
 
+import com.yo.yoprj.common.exception.NotFoundException;
 import com.yo.yoprj.domain.entity.Student;
-import com.yo.yoprj.domain.enums.Gender;
-import com.yo.yoprj.domain.enums.Status;
 import com.yo.yoprj.dto.student.StudentResponse;
 import com.yo.yoprj.dto.student.StudentUpsertRequest;
+import com.yo.yoprj.repository.ParentRepository;
 import com.yo.yoprj.repository.StudentRepository;
 import com.yo.yoprj.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final ParentRepository parentRepository;
+    private final ModelMapper modelMapper;
 
     private StudentResponse map(Student student) {
-        StudentResponse studentResponse = new StudentResponse();
-        studentResponse.setId(student.getId());
-        studentResponse.setStudentCode(student.getStudentCode());
-        studentResponse.setFullName(student.getFullName());
-        studentResponse.setDateOfBirth(student.getDateOfBirth());
-        studentResponse.setGender(student.getGender());
-        studentResponse.setGradeLevel(student.getGradeLevel());
-        studentResponse.setSchoolName(student.getSchoolName());
-        studentResponse.setPhone(student.getPhone());
-        studentResponse.setParentId(student.getParentId());
-        studentResponse.setStatus(student.getStatus());
-        studentResponse.setNote(student.getNote());
-        studentResponse.setCreatedAt(student.getCreatedAt());
-        studentResponse.setUpdatedAt(student.getUpdatedAt());
-
-        return studentResponse;
+        return modelMapper.map(student, StudentResponse.class);
     }
 
     private Student toStudent(StudentUpsertRequest req) {
         Student student = new Student();
-        student.setStudentCode(req.getStudentCode());
-        student.setFullName(req.getFullName());
-        student.setDateOfBirth(req.getDateOfBirth());
-        student.setGender(req.getGender());
-        student.setGradeLevel(req.getGradeLevel());
-        student.setSchoolName(req.getSchoolName());
-        student.setPhone(req.getPhone());
-        student.setParentId(req.getParentId());
-        student.setStatus(req.getStatus());
-        student.setNote(req.getNote());
-
+        modelMapper.map(req, student);
+        
+        if (req.getParentId() > 0) {
+            student.setParent(parentRepository.findById(req.getParentId())
+                    .orElseThrow(() -> new NotFoundException("Parent not found: " + req.getParentId())));
+        }
+        
         return student;
     }
 
@@ -63,29 +45,39 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .map(this::map)
                 .toList();
-
-//        List<StudentResponse> result = new ArrayList<>();
-//        for (Student student : studentRepository.findAll()) {
-//            StudentResponse studentResponse = map(student);
-//            result.add(studentResponse);
-//        }
-//        return result;
     }
 
-    public Optional<StudentResponse> findById(int id){
-        return studentRepository.findById(id).map(this::map);
+    @Override
+    public Page<StudentResponse> findAll(Pageable pageable) {
+        return studentRepository.findAll(pageable)
+                .map(this::map);
+    }
+
+    public StudentResponse findById(int id) {
+        return studentRepository.findById(id).map(this::map)
+                .orElseThrow(() -> new NotFoundException("Student not found: " + id));
     }
 
     public StudentResponse create(StudentUpsertRequest req) {
         Student student = toStudent(req);
-        studentRepository.save(student);
+        student = studentRepository.save(student);
         return map(student);
     }
 
     public StudentResponse update(int id, StudentUpsertRequest req) {
-        Student student = toStudent(req);
-        student.setId(id);
-        studentRepository.save(student);
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student not found: " + id));
+        
+        modelMapper.map(req, student);
+        
+        if (req.getParentId() > 0) {
+            student.setParent(parentRepository.findById(req.getParentId())
+                    .orElseThrow(() -> new NotFoundException("Parent not found: " + req.getParentId())));
+        } else {
+            student.setParent(null);
+        }
+        
+        student = studentRepository.save(student);
         return map(student);
     }
 
@@ -98,5 +90,19 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .map(this::map)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Student getStudentForParent(Integer studentId, Integer parentId) {
+        Student student = getStudent(studentId);
+        if (student.getParent() == null || student.getParent().getId() != parentId) {
+            throw new org.springframework.security.access.AccessDeniedException("Student does not belong to current parent account");
+        }
+        return student;
+    }
+
+    public Student getStudent(Integer id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student not found: " + id));
     }
 }

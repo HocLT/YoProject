@@ -23,7 +23,10 @@ public class Student extends AuditableEntity {
     private String gradeLevel;
     private String schoolName;
     private String phone;
-    private int parentId;
+//    private int parentId;
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
     @Enumerated(EnumType.STRING)
     private Status status;
     private BigDecimal latestScore;

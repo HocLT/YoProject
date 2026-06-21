@@ -2,16 +2,21 @@ package com.yo.yoprj.dto.student;
 
 import com.yo.yoprj.domain.enums.Gender;
 import com.yo.yoprj.domain.enums.Status;
+import com.yo.yoprj.domain.enums.StudentStatus;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentUpsertRequest {
     @NotBlank
     @Pattern(regexp = "^SV\\d{5}$")
@@ -29,4 +34,5 @@ public class StudentUpsertRequest {
     private Status status;
     private BigDecimal latestScore;
     private String note;
+
 }

@@ -8,6 +8,7 @@ import com.yo.yoprj.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,14 +28,16 @@ public class StudentController {
 
     @GetMapping(value = "{id}")
     public ApiResponse findById(@PathVariable int id) {
-        Optional<StudentResponse> result = studentService.findById(id);
-        if (result.isPresent()) {
-            return ApiResponse.success(result.get());
-        } else {
-            return ApiResponse.error("Student["+id+"] not found");
-        }
+        StudentResponse result = studentService.findById(id);
+        return ApiResponse.success(result);
+//        if (result.isPresent()) {
+//            return ApiResponse.success(result.get());
+//        } else {
+//            return ApiResponse.error("Student["+id+"] not found");
+//        }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ApiResponse<StudentResponse> create(
             @Valid
