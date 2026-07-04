@@ -14,4 +14,6 @@ public interface CourseClassService {
     CourseClassResponse create(CourseClassCreateRequest request) throws NotFoundException;
 
     CourseClass getCourseClass(Integer id) throws NotFoundException;
+
+    CourseClass getCourseClassForLock(Integer id);
 }

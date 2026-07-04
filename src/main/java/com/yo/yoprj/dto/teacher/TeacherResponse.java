@@ -1,17 +1,23 @@
 package com.yo.yoprj.dto.teacher;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public record TeacherResponse(
-        Integer id,
-        String teacherCode,
-        String fullName,
-        String phone,
-        String email,
-        String teacherRole,
-        String cccdImageUrl,
-        Boolean isActive,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TeacherResponse {
+    private Integer id;
+    private String teacherCode;
+    private String fullName;
+    private String phone;
+    private String email;
+    private String teacherRole;
+    private String cccdImageUrl;
+    private Boolean isActive;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

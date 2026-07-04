@@ -1,14 +1,20 @@
 package com.yo.yoprj.dto.room;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
-public record RoomResponse(
-        Integer id,
-        String roomCode,
-        String name,
-        Integer capacity,
-        String description,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class RoomResponse {
+    private Integer id;
+    private String roomCode;
+    private String name;
+    private Integer capacity;
+    private String description;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

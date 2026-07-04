@@ -5,6 +5,7 @@ import com.yo.yoprj.dto.course.CourseResponse;
 import com.yo.yoprj.dto.course.CourseUpsertRequest;
 import com.yo.yoprj.repository.CourseRepository;
 import com.yo.yoprj.service.CourseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,13 +34,13 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseResponse create(CourseUpsertRequest req) {
-        return courseService.create(req);
+    public ApiResponse create(@Valid @RequestBody CourseUpsertRequest req) {
+        return ApiResponse.success(courseService.create(req));
     }
 
     @PutMapping(value = "{id}")
-    public CourseResponse update(@PathVariable Integer id, CourseUpsertRequest req) {
-        return courseService.update(id, req);
+    public ApiResponse update(@Valid @RequestBody @PathVariable Integer id, CourseUpsertRequest req) {
+        return ApiResponse.success(courseService.update(id, req));
     }
 
     @DeleteMapping(value = "{id}")

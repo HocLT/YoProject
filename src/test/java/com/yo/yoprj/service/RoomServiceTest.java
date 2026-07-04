@@ -46,7 +46,7 @@ class RoomServiceTest {
         List<RoomResponse> result = roomService.findAll();
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).id()).isEqualTo(1);
+        assertThat(result.get(0).getId()).isEqualTo(1);
     }
 
     @Test
@@ -60,7 +60,7 @@ class RoomServiceTest {
 
         RoomResponse result = roomService.findById(1);
 
-        assertThat(result.id()).isEqualTo(1);
+        assertThat(result.getId()).isEqualTo(1);
     }
 
     @Test
@@ -88,7 +88,7 @@ class RoomServiceTest {
 
         RoomResponse result = roomService.create(request);
 
-        assertThat(result.id()).isEqualTo(1);
+        assertThat(result.getId()).isEqualTo(1);
         verify(modelMapper).map(eq(request), any(Room.class));
     }
 
@@ -106,7 +106,7 @@ class RoomServiceTest {
 
         RoomResponse result = roomService.update(1, request);
 
-        assertThat(result.id()).isEqualTo(1);
+        assertThat(result.getId()).isEqualTo(1);
         verify(modelMapper).map(eq(request), any(Room.class));
     }
 

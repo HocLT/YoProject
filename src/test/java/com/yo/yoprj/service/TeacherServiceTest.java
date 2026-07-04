@@ -47,7 +47,7 @@ class TeacherServiceTest {
         List<TeacherResponse> result = teacherService.findAll();
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).id()).isEqualTo(1);
+        assertThat(result.get(0).getId()).isEqualTo(1);
     }
 
     @Test
@@ -61,7 +61,7 @@ class TeacherServiceTest {
 
         TeacherResponse result = teacherService.findById(1);
 
-        assertThat(result.id()).isEqualTo(1);
+        assertThat(result.getId()).isEqualTo(1);
     }
 
     @Test
@@ -89,7 +89,7 @@ class TeacherServiceTest {
 
         TeacherResponse result = teacherService.create(request);
 
-        assertThat(result.id()).isEqualTo(1);
+        assertThat(result.getId()).isEqualTo(1);
         verify(modelMapper).map(eq(request), any(Teacher.class));
     }
 
@@ -107,7 +107,7 @@ class TeacherServiceTest {
 
         TeacherResponse result = teacherService.update(1, request);
 
-        assertThat(result.id()).isEqualTo(1);
+        assertThat(result.getId()).isEqualTo(1);
         verify(modelMapper).map(eq(request), any(Teacher.class));
     }
 

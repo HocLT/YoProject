@@ -66,4 +66,11 @@ public class CourseClassServiceImpl implements CourseClassService {
         return courseClassRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Course class not found: " + id));
     }
+
+    @Transactional
+    public CourseClass getCourseClassForLock(Integer id) {
+        return courseClassRepository.findByIdWithLock(id)
+                .orElseThrow(() -> new NotFoundException("Course class not found: " + id));
+    }
+
 }

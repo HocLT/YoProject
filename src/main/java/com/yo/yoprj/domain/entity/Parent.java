@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.Nationalized;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class Parent extends AuditableEntity {
 
     @Column(name = "full_name", nullable = false, length = 100)
+    @Nationalized()
     private String fullName;
 
     @Column(nullable = false, unique = true, length = 20)
