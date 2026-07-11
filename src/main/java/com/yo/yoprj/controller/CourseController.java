@@ -39,7 +39,7 @@ public class CourseController {
     }
 
     @PutMapping(value = "{id}")
-    public ApiResponse update(@Valid @RequestBody @PathVariable Integer id, CourseUpsertRequest req) {
+    public ApiResponse update(@PathVariable Integer id, @Valid @RequestBody CourseUpsertRequest req) {
         return ApiResponse.success(courseService.update(id, req));
     }
 

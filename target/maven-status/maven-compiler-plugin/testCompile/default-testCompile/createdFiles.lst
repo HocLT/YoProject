@@ -3,7 +3,9 @@ com\yo\yoprj\controller\RoomControllerTest.class
 com\yo\yoprj\controller\UserControllerTest.class
 com\yo\yoprj\service\UserServiceTest.class
 com\yo\yoprj\YoprjApplicationTests.class
+com\yo\yoprj\controller\PromotionControllerTest.class
 com\yo\yoprj\service\ParentServiceTest.class
+com\yo\yoprj\service\PromotionServiceTest.class
 com\yo\yoprj\service\ScheduleSlotServiceTest.class
 com\yo\yoprj\service\StudentServiceTest.class
 com\yo\yoprj\controller\ParentControllerTest.class

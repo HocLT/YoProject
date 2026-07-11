@@ -2,6 +2,7 @@ package com.yo.yoprj.config;
 
 import com.yo.yoprj.domain.entity.*;
 import com.yo.yoprj.dto.attendance.AttendanceResponse;
+import com.yo.yoprj.dto.billing.InvoiceResponse;
 import com.yo.yoprj.dto.courseclass.CourseClassResponse;
 import com.yo.yoprj.dto.enrollment.EnrollmentResponse;
 import com.yo.yoprj.dto.learning.LearningResultResponse;
@@ -133,32 +134,32 @@ public class WebConfig {
         };
         modelMapper.createTypeMap(LearningResult.class, LearningResultResponse.class).setConverter(learningResultConverter);
 
-        // Converter for Attendance -> AttendanceResponse
-//        Converter<TuitionInvoice, InvoiceResponse> invoiceConverter = ctx -> {
-//            TuitionInvoice item = ctx.getSource();
-//            return new InvoiceResponse(
-//                    item.getId(),
-//                    item.getInvoiceCode(),
-//                    item.getStudent().getId(),
-//                    item.getStudent().getFullName(),
-//                    item.getCourseClass().getId(),
-//                    item.getCourseClass().getName(),
-//                    item.getBillingMonth(),
-//                    item.getOriginalAmount(),
-//                    item.getDiscountAmount(),
-//                    item.getFinalAmount(),
-//                    item.getAmountPaid(),
-//                    item.getBalanceAmount(),
-//                    item.getStatus(),
-//                    item.getPromotion().getId(),
-//                    item.getPromotion().getName(),
-//                    item.getDueDate(),
-//                    item.getnote(),
-//                    item.getCreatedAt(),
-//                    item.getUpdatedAt()
-//            );
-//        };
-//        modelMapper.createTypeMap(TuitionInvoice.class, InvoiceResponse.class).setConverter(invoiceConverter);
+        // Converter for TuitionInvoice -> InvoiceResponse
+        Converter<TuitionInvoice, InvoiceResponse> invoiceConverter = ctx -> {
+            TuitionInvoice item = ctx.getSource();
+            return new InvoiceResponse(
+                    item.getId(),
+                    item.getInvoiceCode(),
+                    item.getStudent().getId(),
+                    item.getStudent().getFullName(),
+                    item.getCourseClass().getId(),
+                    item.getCourseClass().getName(),
+                    item.getBillingMonth(),
+                    item.getOriginalAmount(),
+                    item.getDiscountAmount(),
+                    item.getFinalAmount(),
+                    item.getAmountPaid(),
+                    item.getBalanceAmount(),
+                    item.getStatus().toString(),
+                    item.getPromotion().getId(),
+                    item.getPromotion().getName(),
+                    item.getDueDate(),
+                    item.getNote(),
+                    item.getCreatedAt(),
+                    item.getUpdatedAt()
+            );
+        };
+        modelMapper.createTypeMap(TuitionInvoice.class, InvoiceResponse.class).setConverter(invoiceConverter);
 
 
         return modelMapper;
