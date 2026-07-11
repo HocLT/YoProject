@@ -6,6 +6,8 @@ public record AuthResponse(
         String accessToken,
         String tokenType,
         Instant expiresAt,
-        CurrentUserResponse user
+        CurrentUserResponse user,
+        Boolean requires2fa,
+        String tempToken
 ) {
 }

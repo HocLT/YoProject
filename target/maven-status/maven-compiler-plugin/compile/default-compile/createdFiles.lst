@@ -65,7 +65,6 @@ com\yo\yoprj\dto\attendance\AttendanceUpdateRequest.class
 com\yo\yoprj\controller\LearningResultController.class
 com\yo\yoprj\service\EnrollmentService.class
 com\yo\yoprj\dto\enrollment\EnrollmentResponse.class
-com\yo\yoprj\service\impl\AuthServiceImpl.class
 com\yo\yoprj\dto\attendance\StudentAttendanceItem.class
 com\yo\yoprj\domain\entity\Enrollment.class
 com\yo\yoprj\domain\entity\Promotion.class
@@ -116,7 +115,6 @@ com\yo\yoprj\domain\entity\ScheduleSlot.class
 com\yo\yoprj\dto\enrollment\EnrollmentCreateRequest.class
 com\yo\yoprj\domain\entity\Attendance.class
 com\yo\yoprj\service\UserService.class
-com\yo\yoprj\service\impl\LearningResultServiceImpl.class
 com\yo\yoprj\controller\EnrollmentController.class
 com\yo\yoprj\domain\AuditableEntity.class
 com\yo\yoprj\dto\room\RoomResponse.class
