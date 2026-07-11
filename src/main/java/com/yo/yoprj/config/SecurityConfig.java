@@ -1,5 +1,8 @@
 package com.yo.yoprj.config;
 
+// login 2 factor
+// send mail after payment
+
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.yo.yoprj.common.exception.CustomAccessDeniedHandler;
 import com.yo.yoprj.common.exception.CustomAuthenticationEntryPoint;

@@ -3,6 +3,7 @@ package com.yo.yoprj.config;
 import com.yo.yoprj.domain.entity.*;
 import com.yo.yoprj.dto.attendance.AttendanceResponse;
 import com.yo.yoprj.dto.billing.InvoiceResponse;
+import com.yo.yoprj.dto.billing.PaymentResponse;
 import com.yo.yoprj.dto.courseclass.CourseClassResponse;
 import com.yo.yoprj.dto.enrollment.EnrollmentResponse;
 import com.yo.yoprj.dto.learning.LearningResultResponse;
@@ -161,6 +162,24 @@ public class WebConfig {
         };
         modelMapper.createTypeMap(TuitionInvoice.class, InvoiceResponse.class).setConverter(invoiceConverter);
 
+        // Converter for Payment -> PaymentResponse
+        Converter<Payment, PaymentResponse> paymentConverter = ctx -> {
+            Payment item = ctx.getSource();
+            return new PaymentResponse(
+                    item.getId(),
+                    item.getInvoice().getId(),
+                    item.getInvoice().getInvoiceCode(),
+                    item.getPaymentCode(),
+                    item.getPaidAmount(),
+                    item.getPaymentMethod().toString(),
+                    item.getPaidAt(),
+                    item.getCashierUser().getId(),
+                    item.getCashierUser().getUsername(),
+                    item.getNote(),
+                    item.getCreatedAt(),
+                    item.getUpdatedAt());
+        };
+        modelMapper.createTypeMap(Payment.class, PaymentResponse.class).setConverter(paymentConverter);
 
         return modelMapper;
     }

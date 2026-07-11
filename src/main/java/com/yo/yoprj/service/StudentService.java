@@ -29,4 +29,6 @@ public interface StudentService {
     Student getStudentForParent(Integer studentId, Integer parentId) throws NotFoundException;
 
     Student getStudent(Integer id);
+
+    List<StudentResponse> findByParentId(Integer parentId);
 }

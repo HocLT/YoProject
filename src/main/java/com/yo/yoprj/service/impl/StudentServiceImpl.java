@@ -105,4 +105,9 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Student not found: " + id));
     }
+
+    @Transactional(readOnly = true)
+    public List<StudentResponse> findByParentId(Integer parentId) {
+        return studentRepository.findByParentId(parentId).stream().map(o->modelMapper.map(o, StudentResponse.class)).toList();
+    }
 }

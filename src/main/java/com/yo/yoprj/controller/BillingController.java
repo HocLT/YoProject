@@ -4,6 +4,8 @@ import com.yo.yoprj.common.ApiResponse;
 import com.yo.yoprj.common.exception.BadRequestException;
 import com.yo.yoprj.dto.billing.InvoiceCreateRequest;
 import com.yo.yoprj.dto.billing.InvoiceResponse;
+import com.yo.yoprj.dto.billing.PaymentCreateRequest;
+import com.yo.yoprj.dto.billing.PaymentResponse;
 import com.yo.yoprj.service.BillingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -51,6 +53,12 @@ public class BillingController {
     public ApiResponse<List<InvoiceResponse>> findInvoicesByStudent(@Parameter(description = "Student identifier", example = "1") @PathVariable Integer studentId,
                                                                     @Parameter(hidden = true) Principal principal) throws BadRequestException {
         return ApiResponse.success(billingService.findInvoicesByStudent(studentId, principal.getName()));
+    }
+
+    @PostMapping("/payments")
+    @PreAuthorize("hasAnyRole('ADMIN','CASHIER')")
+    public ApiResponse<PaymentResponse> createPayment(@Valid @RequestBody PaymentCreateRequest request, Principal principal) throws BadRequestException {
+        return ApiResponse.success("Payment created", billingService.createPayment(request, principal.getName()));
     }
 }
 

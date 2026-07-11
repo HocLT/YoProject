@@ -13,4 +13,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 //    public List<Student> findByStudentCodeLike(@Param("code") String code);
 
     public List<Student> findByStudentCodeLike(String code);
+
+    java.util.List<Student> findByParentId(Integer parentId);
 }
