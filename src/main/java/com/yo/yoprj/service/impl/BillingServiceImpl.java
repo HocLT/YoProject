@@ -21,6 +21,8 @@ import com.yo.yoprj.service.CourseClassService;
 import com.yo.yoprj.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import com.yo.yoprj.event.PaymentCompletedEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,7 @@ public class BillingServiceImpl implements BillingService {
     private final AuthService authService;
     private final PaymentRepository  paymentRepository;
     private final ModelMapper mapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public InvoiceResponse createInvoice(InvoiceCreateRequest request) {
@@ -126,6 +129,8 @@ public class BillingServiceImpl implements BillingService {
         invoice.setBalanceAmount(balance);
         invoice.setStatus(calculateInvoiceStatus(balance, newAmountPaid));
         tuitionInvoiceRepository.save(invoice);
+
+        eventPublisher.publishEvent(new PaymentCompletedEvent(savedPayment));
 
         return mapper.map(savedPayment, PaymentResponse.class);
     }
