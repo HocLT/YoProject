@@ -39,4 +39,10 @@ public class User extends AuditableEntity {
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
+
+    @Column(name = "two_factor_secret")
+    private String twoFactorSecret;
+
+    @Column(name = "is_two_factor_enabled", nullable = false)
+    private Boolean isTwoFactorEnabled = false;
 }
